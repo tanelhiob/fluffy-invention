@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Waiting for Saskia 💕</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 50%, #fbc2eb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+            font-family: 'Quicksand', sans-serif;
+            color: #4a3050;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating hearts background */
+        .hearts-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .floating-heart {
+            position: absolute;
+            bottom: -60px;
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; }
+            10%  { opacity: 0.6; }
+            90%  { opacity: 0.4; }
+            100% { transform: translateY(-110vh) rotate(360deg) scale(0.5); opacity: 0; }
+        }
+
+        .main-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 2rem;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+        .main-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .spa-icon {
+            font-size: 4rem;
+            line-height: 1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.1); }
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #5c3d6e;
+        }
+
+        .subtitle {
+            color: #8e6d9e;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        /* Timer tiles */
+        .timer-grid {
+            display: flex;
+            gap: 0.6rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .time-tile {
+            background: linear-gradient(135deg, #e8d5f5, #f0e0fa);
+            border-radius: 1rem;
+            padding: 0.8rem 0.5rem;
+            min-width: 75px;
+            flex: 1;
+            max-width: 90px;
+            box-shadow: 0 4px 15px rgba(150, 100, 180, 0.15);
+            transition: transform 0.2s ease;
+        }
+        .time-tile:hover {
+            transform: scale(1.05);
+        }
+        .time-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #6b3fa0;
+            line-height: 1.1;
+        }
+        .time-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #9b7fb8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .waiting-badge {
+            background: linear-gradient(135deg, #f6d365, #fda085);
+            color: #6b3f1a;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            display: inline-block;
+            animation: badgePulse 3s ease-in-out infinite;
+        }
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(253, 160, 133, 0.4); }
+            50%      { box-shadow: 0 0 0 10px rgba(253, 160, 133, 0); }
+        }
+
+        .form-control {
+            border-radius: 1rem;
+            border: 2px solid #d4b8e8;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            color: #5c3d6e;
+            background: rgba(255, 255, 255, 0.7);
+        }
+        .form-control:focus {
+            border-color: #b088cc;
+            box-shadow: 0 0 0 0.2rem rgba(176, 136, 204, 0.25);
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: #fff;
+            border: none;
+            border-radius: 1rem;
+            font-weight: 700;
+            font-family: 'Quicksand', sans-serif;
+            padding: 0.75rem;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+        }
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+            color: #fff;
+        }
+
+        .btn-reset {
+            color: #9b7fb8;
+            background: none;
+            border: 2px solid #d4b8e8;
+            border-radius: 1rem;
+            font-weight: 600;
+            font-family: 'Quicksand', sans-serif;
+            transition: all 0.2s ease;
+        }
+        .btn-reset:hover {
+            background: rgba(212, 184, 232, 0.2);
+            color: #6b3fa0;
+        }
+
+        .love-note {
+            font-size: 0.85rem;
+            color: #b088cc;
+            font-weight: 600;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-bg" id="hearts-bg"></div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-11 col-sm-8 col-md-6 col-lg-5">
+                <div class="main-card p-4 p-md-5 text-center shadow-lg">
+                    <div class="spa-icon mb-2">🧖‍♀️</div>
+                    <h1 class="mb-1">Waiting for Saskia</h1>
+                    <p class="subtitle mb-4">✨ She's getting pampered at the spa ✨</p>
+
+                    <div id="timer-section" style="display: none;">
+                        <div class="waiting-badge mb-3">💕 Still waiting...</div>
+                        <div class="timer-grid mb-3" id="timer"></div>
+                        <p class="love-note mb-0">Worth every second 💗</p>
+                    </div>
+
+                    <div id="picker-section">
+                        <label for="start-time" class="form-label fw-bold mb-2">When did the wait begin? ⏰</label>
+                        <input type="datetime-local" id="start-time" class="form-control form-control-lg mb-3" />
+                        <button id="start-btn" class="btn btn-start btn-lg w-100">💘 Start counting</button>
+                    </div>
+
+                    <button id="reset-btn" class="btn btn-reset btn-sm mt-3" style="display: none;">
+                        🔄 Pick a different time
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Floating hearts
+        (function createHearts() {
+            const container = document.getElementById('hearts-bg');
+            const hearts = ['💕', '💗', '💖', '💘', '🩷', '🤍', '✨'];
+            for (let i = 0; i < 20; i++) {
+                const span = document.createElement('span');
+                span.classList.add('floating-heart');
+                span.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                span.style.left = Math.random() * 100 + '%';
+                span.style.animationDuration = (8 + Math.random() * 12) + 's';
+                span.style.animationDelay = (Math.random() * 15) + 's';
+                span.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+                container.appendChild(span);
+            }
+        })();
+
+        const STORAGE_KEY = 'saskia-spa-start-time';
+        const startTimeInput = document.getElementById('start-time');
+        const startBtn = document.getElementById('start-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const timerSection = document.getElementById('timer-section');
+        const pickerSection = document.getElementById('picker-section');
+        const timerDisplay = document.getElementById('timer');
+        let intervalId = null;
+
+        // Default the picker to now
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        startTimeInput.value = now.toISOString().slice(0, 16);
+
+        function pluralize(n, word) {
+            return n === 1 ? word : word + 's';
+        }
+
+        function updateTimer(startTime) {
+            const diff = Date.now() - startTime.getTime();
+            if (diff < 0) {
+                timerDisplay.innerHTML = '<div class="time-tile"><div class="time-value">🤔</div><div class="time-label">Future?</div></div>';
+                return;
+            }
+
+            const totalSeconds = Math.floor(diff / 1000);
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            const parts = [
+                { value: days, label: pluralize(days, 'day') },
+                { value: hours, label: pluralize(hours, 'hour') },
+                { value: minutes, label: pluralize(minutes, 'min') },
+                { value: seconds, label: pluralize(seconds, 'sec') },
+            ];
+
+            timerDisplay.innerHTML = parts.map(p =>
+                `<div class="time-tile">
+                    <div class="time-value">${p.value}</div>
+                    <div class="time-label">${p.label}</div>
+                </div>`
+            ).join('');
+        }
+
+        function startCounting(startTime) {
+            pickerSection.style.display = 'none';
+            timerSection.style.display = 'block';
+            resetBtn.style.display = 'inline-block';
+
+            updateTimer(startTime);
+            intervalId = setInterval(() => updateTimer(startTime), 1000);
+        }
+
+        function reset() {
+            if (intervalId) clearInterval(intervalId);
+            localStorage.removeItem(STORAGE_KEY);
+            timerSection.style.display = 'none';
+            resetBtn.style.display = 'none';
+            pickerSection.style.display = 'block';
+        }
+
+        // Try loading from localStorage
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            const savedDate = new Date(saved);
+            if (!isNaN(savedDate.getTime())) {
+                startCounting(savedDate);
+            }
+        }
+
+        startBtn.addEventListener('click', () => {
+            const picked = new Date(startTimeInput.value);
+            if (isNaN(picked.getTime())) return;
+            localStorage.setItem(STORAGE_KEY, picked.toISOString());
+            startCounting(picked);
+        });
+
+        resetBtn.addEventListener('click', reset);
+    </script>
+</body>
+</html>
