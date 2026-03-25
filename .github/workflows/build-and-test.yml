@@ -30,7 +30,6 @@ jobs:
           dotnet run --project HelloWorld/HelloWorld.csproj --urls http://localhost:5000 &
           APP_PID=$!
 
-          # Wait for the app to start
           for i in $(seq 1 30); do
             if curl -s http://localhost:5000 > /dev/null 2>&1; then
               break
@@ -38,14 +37,13 @@ jobs:
             sleep 1
           done
 
-          # Verify the response
           RESPONSE=$(curl -s http://localhost:5000)
           echo "Response: $RESPONSE"
 
           kill $APP_PID
 
-          if [ "$RESPONSE" = "Hello, World!" ]; then
-            echo "Success! App returned expected response."
+          if echo "$RESPONSE" | grep -q "Waiting for Saskia"; then
+            echo "Success! App returned expected page."
           else
             echo "Unexpected response."
             exit 1
